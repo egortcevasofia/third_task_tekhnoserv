@@ -2,17 +2,13 @@ import java.util.ArrayList;
 import java.util.concurrent.CyclicBarrier;
 
 public class Main {
-
-    //Инициализируем барьер на три потока и таском, который будет выполняться, когда
-    //у барьера соберется три потока. После этого, они будут освобождены.
-
     static CyclicBarrier BARRIER;
 
     public static void main(String[] args) throws InterruptedException {
 
         int numberOfCustomers = Integer.parseInt(args[0]);
         Store store = new Store();
-        store.setTovar(1000);
+        store.setGoods(1000);
 
         BARRIER = new CyclicBarrier(numberOfCustomers, store);
 
@@ -20,15 +16,20 @@ public class Main {
 
         for (int i = 1; i <= numberOfCustomers; i++) {
             System.out.println(i);
-            Customer customer = new Customer("Customer_№" + i, store);
+            Customer customer = new Customer(String.valueOf(i), store);
             listOfCustomers.add(customer);
-            new Thread(customer).start();
-            //Thread.sleep(400);
         }
 
-Thread.sleep(3000);
+        store.setListOfCustomers(listOfCustomers);
+
         for (int i = 0; i < listOfCustomers.size(); i++) {
-            System.out.println(listOfCustomers.get(i).getQuantityOfPurchase());
+            new Thread(listOfCustomers.get(i)).start();
+        }
+
+        Thread.sleep(3000);
+        for (int i = 0; i < listOfCustomers.size(); i++) {
+            System.out.println("Покупатель совершил " +  listOfCustomers.get(i).getQuantityOfPurchase()
+                    + " покупок, на общую сумму " + listOfCustomers.get(i).getQuantityOfPurchase());
         }
     }
 

@@ -1,35 +1,59 @@
+import java.util.ArrayList;
 import java.util.Random;
+//Таск, который будет выполняться при достижении сторонами барьера
 
-public class Store implements Runnable{
-   private int tovar;
-    Random random = new Random();
+public class Store implements Runnable {
+    private int goods;
+    private ArrayList<Customer> listOfCustomers;
+    private Random random = new Random();
+    private ArrayList<Customer> finalListOfCustomers;
+
 
 
     @Override
     public void run() {
         try {
             Thread.sleep(50);
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 0; i <= listOfCustomers.size(); i++) {
 
                 int randomQuantity = random.nextInt(9) + 1;
-                if (tovar <= randomQuantity){
-                    randomQuantity = tovar;
+                if (goods <= randomQuantity) {
+                    randomQuantity = goods;
                 }
-
-                tovar = tovar - randomQuantity;
+//
+//                Customer customer = listOfCustomers.get(i);
+//                customer.quantityOfPurchase++;
+//                customer.summ +=randomQuantity;
+//
+                goods = goods - randomQuantity;
             }
 
-
-            System.out.println("всего осталось товара" + tovar);
+            System.out.println("всего осталось товара" + goods);
         } catch (InterruptedException e) {
         }
     }
 
-    public int getTovar() {
-        return tovar;
+    public int getGoods() {
+        return goods;
     }
 
-    public void setTovar(int tovar) {
-        this.tovar = tovar;
+    public void setGoods(int goods) {
+        this.goods = goods;
+    }
+
+    public ArrayList<Customer> getListOfCustomers() {
+        return listOfCustomers;
+    }
+
+    public void setListOfCustomers(ArrayList<Customer> listOfCustomers) {
+        this.listOfCustomers = listOfCustomers;
+    }
+
+    public ArrayList<Customer> getFinalListOfCustomers() {
+        return finalListOfCustomers;
+    }
+
+    public void setFinalListOfCustomers(ArrayList<Customer> finalListOfCustomers) {
+        this.finalListOfCustomers = finalListOfCustomers;
     }
 }
