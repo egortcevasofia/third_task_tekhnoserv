@@ -11,7 +11,7 @@ public class Customer implements Runnable {
     private CyclicBarrier barrier;
 
 
-    public Customer(String name, Store store, CyclicBarrier barrier) {
+    Customer(String name, Store store, CyclicBarrier barrier) {
         this.name = name;
         this.store = store;
         this.barrier = barrier;
@@ -24,32 +24,30 @@ public class Customer implements Runnable {
                 System.out.printf("Покупатель №%s подошел к складу.\n", name);
                 barrier.await();
                 byu();
+                barrier.await();
             }
-
+            printToConsole();
         } catch (BrokenBarrierException | InterruptedException e) {
             System.out.println("Произошла ошибка при синхронизации потоков");
         }
     }
 
 
-    private synchronized void byu() {
+    private void byu() {
         int randomQuantity = random.nextInt(10) + 1;
-        store.byu(randomQuantity);
-        if (store.getGoods() > 0) {
+        int realQuantity = store.getRealQuantityAndByu(randomQuantity);
+
+        if (realQuantity > 0) {
             quantityOfPurchase++;
-            summ += randomQuantity;
+            summ += realQuantity;
         }
     }
 
 
-    public int getQuantityOfPurchase() {
-        return quantityOfPurchase;
+    private void printToConsole(){
+        System.out.println("Покупатель_№" + name + " совершил " + quantityOfPurchase
+                + " покупок, на общую сумму " + summ);
     }
-
-    public int getSumm() {
-        return summ;
-    }
-
 
 }
 

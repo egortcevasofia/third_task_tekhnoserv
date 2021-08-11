@@ -6,19 +6,20 @@ public class Store implements Runnable {
         this.goods = goods;
     }
 
-
-    public synchronized void byu(int randomQuantity) {
+    synchronized int getRealQuantityAndByu(int randomQuantity) {
+        int realQuantity = randomQuantity;
         if (goods <= randomQuantity) {
-            randomQuantity = goods;
+            realQuantity = goods;
+            goods = 0;
+        }else{
+            goods = goods - randomQuantity;
         }
-        goods = goods - randomQuantity;
+        return realQuantity;
     }
 
-
-    public synchronized int getGoods() {
+    int getGoods() {
         return goods;
     }
-
 
     @Override
     public void run() {
