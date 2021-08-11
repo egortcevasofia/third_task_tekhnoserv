@@ -1,18 +1,15 @@
-import java.util.concurrent.CyclicBarrier;
+import java.util.Random;
+import java.util.concurrent.BrokenBarrierException;
 
-//Стороны, которые будут достигать барьера
 public class Customer implements Runnable {
-    public String name;
-    CyclicBarrier cyclicBarrier;
-    public int quantityOfPurchase;
-    public int summ;
-    Store store;
+    private String name;
+    private int quantityOfPurchase;
+    private int summ;
+    private Store store;
+    private Random random = new Random();
 
-    public Customer(String name) {
-        this.name = name;
-    }
 
-    public Customer(String name, Store store) {
+    Customer(String name, Store store) {
         this.name = name;
         this.store = store;
     }
@@ -24,11 +21,25 @@ public class Customer implements Runnable {
                 System.out.printf("Покупатель №%s подошел к складу.\n", name);
                 //Для указания потоку о том что он достиг барьера, нужно вызвать метод await()
                 //После этого данный поток блокируется, и ждет пока остальные стороны достигнут барьера
+                Main.barrier.await();
+                System.out.println("всего осталось товара" + store.getGoods());
+                int randomQuantity = random.nextInt(9) + 1;
+                if (store.getGoods() <= randomQuantity) {
+                    randomQuantity = store.getGoods();
+                    quantityOfPurchase++;
+                    summ+=randomQuantity;
+                    store.byu(randomQuantity);
+                    break;
+                }
 
-                Main.BARRIER.await();
+                quantityOfPurchase++;
+                summ+=randomQuantity;
+                store.byu(randomQuantity);
+
             }
-
-        } catch (Exception e) {
+            Thread.currentThread().interrupt();
+        } catch (BrokenBarrierException | InterruptedException e) {
+            System.out.println("Произошла ошибка при синхронизации потоков");
         }
     }
 
@@ -36,24 +47,10 @@ public class Customer implements Runnable {
         return quantityOfPurchase;
     }
 
-    public void setQuantityOfPurchase(int quantityOfPurchase) {
-        this.quantityOfPurchase = quantityOfPurchase;
-    }
 
     public int getSumm() {
         return summ;
     }
 
-    public void setSumm(int summ) {
-        this.summ = summ;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
 

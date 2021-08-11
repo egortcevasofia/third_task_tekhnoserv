@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eaa50f32-8bfa-45ac-ba46-cf7818c8167f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
@@ -51,7 +50,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="third_task_tekhnoserv" />
-      <option name="PROGRAM_PARAMETERS" value="&quot;5&quot;" />
+      <option name="PROGRAM_PARAMETERS" value="5" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -72,7 +71,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1628509359435</updated>
-      <workItem from="1628509361846" duration="19958000" />
+      <workItem from="1628509361846" duration="28683000" />
     </task>
     <servers />
   </component>
