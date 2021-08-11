@@ -22,7 +22,7 @@ public class Main {
         Store store = new Store();
         store.setGoods(TOVAR);
 
-        barrier = new CyclicBarrier(numberOfCustomers);
+        barrier = new CyclicBarrier(numberOfCustomers, store);
 
         ArrayList<Customer> listOfCustomers = new ArrayList<>();
 
@@ -33,8 +33,8 @@ public class Main {
         }
 
 
-        Thread.currentThread().join();
-
+       // Thread.currentThread().join();
+Thread.sleep(3000);
         for (Customer listOfCustomer : listOfCustomers) {
             System.out.println("Покупатель совершил " + listOfCustomer.getQuantityOfPurchase()
                     + " покупок, на общую сумму " + listOfCustomer.getSumm());

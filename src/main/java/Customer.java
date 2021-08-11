@@ -19,10 +19,7 @@ public class Customer implements Runnable {
         try {
             while (store.getGoods() > 0) {
                 System.out.printf("Покупатель №%s подошел к складу.\n", name);
-                //Для указания потоку о том что он достиг барьера, нужно вызвать метод await()
-                //После этого данный поток блокируется, и ждет пока остальные стороны достигнут барьера
                 Main.barrier.await();
-                System.out.println("всего осталось товара" + store.getGoods());
                 int randomQuantity = random.nextInt(9) + 1;
                 if (store.getGoods() <= randomQuantity) {
                     randomQuantity = store.getGoods();
@@ -30,11 +27,11 @@ public class Customer implements Runnable {
                     summ+=randomQuantity;
                     store.byu(randomQuantity);
                     break;
+                }else {
+                    quantityOfPurchase++;
+                    summ+=randomQuantity;
+                    store.byu(randomQuantity);
                 }
-
-                quantityOfPurchase++;
-                summ+=randomQuantity;
-                store.byu(randomQuantity);
 
             }
             Thread.currentThread().interrupt();
